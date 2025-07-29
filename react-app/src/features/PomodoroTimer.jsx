@@ -2,13 +2,11 @@ import Timer from '../components/Timer'
 import Task from '../components/Task'
 import TimerControls from './TimerControls'
 import MusicControls from './MusicControls'
-import { ModeContext } from '../components/ModeContext'
 import { useContext, useState } from 'react'
-import { IsPlayingContext } from '../components/IsPlayingContext'
+import { TimerContext } from '../components/TimerContext'
 
 export default function PomodoroTimer() {
-  const {isPlaying, setIsPlaying} = useContext(IsPlayingContext)
-  const {ModesStyles} = useContext(ModeContext);
+  const {isPlaying, ModesStyles} = useContext(TimerContext)
   return (
     <div className='Timer'>
       <Task style={{color: ModesStyles.buttons.background}} isActive = {isPlaying}></Task>

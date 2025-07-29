@@ -1,27 +1,46 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TimerContext } from './TimerContext'
-import { IsPlayingContext } from './IsPlayingContext';
-import EditingDiv from './EditingDiv'
 
-export default function Timer({isActive}) {
-  const {currentTimer, setTimer} = useContext(TimerContext);
-  let [Minutes, setMinutes] = useState('0')
-  let [Seconds, setSeconds] = useState('0')
-  let [TotalTime, setTotalTime] = useState('0')
-  function formatTimer(){
-    Minutes = setMinutes(currentTimer.slice(0,-2))
-    Seconds = setSeconds(currentTimer.slice(-2))
-    (Minutes.length() < 2 ? Minutes = '00' : {})
-    TotalTime = (parseInt(Minutes, 10) * 60 * 1000) + (parseInt(Seconds, 10) * 1000)
+export default function Timer() {
+  const {isPlaying, setIsPlaying, currentTimer, setTimer,
+        incrementStreaks, isPomodoro, setPomodoro
+  } = useContext(TimerContext)
+
+
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    if (currentTimer <= 0){
+      setIsPlaying(false)
+      setTimer(0)
+      {isPomodoro ? incrementStreaks() : {}}
+      setPomodoro(!isPomodoro)
+      return;
+    }
+
+    const tick = setInterval(() => {
+      setTimer(prev => prev - 1000)
+    }, 1);
+
+    return () => clearInterval(tick);
+  }, [isPlaying, setTimer, currentTimer, setPomodoro])
+
+  function formatTimer(milliseconds){
+    let totalseconds = Math.floor(milliseconds/1000)
+    let totalminutes = Math.floor(totalseconds/60)
+
+    let seconds = Math.floor(totalseconds % 60)
+    let minutes = Math.floor(totalminutes % 60)
+
+    const paddedMinutes = String(minutes).padStart(2, '0');
+    const paddedSeconds = String(seconds).padStart(2, '0');
+    return `${paddedMinutes}:${paddedSeconds}`;
+
   }
-  formatTimer()
-  console.log(TotalTime)
-  function Timer(){
-  };
   console.log('Timer atual ' + currentTimer)
   return (
     <div className='Timer'>
-      <EditingDiv divclass='timerCount' content={`${Minutes}:${Seconds}`} changecontent={setTimer} maxlength={5} ></EditingDiv>
+      <div className='timerCount'>{formatTimer(currentTimer)}</div>
     </div>
   )
 }

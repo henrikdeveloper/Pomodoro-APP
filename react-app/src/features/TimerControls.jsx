@@ -1,18 +1,34 @@
 import React from 'react'
 import Button from '../components/Button';
-import {ModeContext} from '../components/ModeContext';
 import { useContext } from 'react';
+import { TimerContext } from '../components/TimerContext';
 
 export default function TimerControls() {
   {/*We destructure the object useContext(ModeContext) pass back, aiming only the ModesStyles element*/}
-  const {ModesStyles} = useContext(ModeContext);
-  const {setpomodoro: setTheme,
-         ispomodoro: currentTheme
-  } = useContext(ModeContext);
+  const {setPomodoro: setTheme,
+         isPomodoro: currentTheme,
+         forceLongBreak,
+         ModesStyles,
+         currentTimer,
+         reverseForced
+  } = useContext(TimerContext);
 
   function changeMode() {
     setTheme(!currentTheme)
   };
+  function longBreakButton(){
+    if(currentTheme){
+      setTheme(!currentTheme)
+    }
+    forceLongBreak()
+  };
+  function breakButton(){
+    if(currentTheme){
+      setTheme(!currentTheme)
+    }
+    reverseForced()
+  }
+  console.log(currentTimer)
   return (
     <div className='timerControls_Pomodoro'>
       {/*We apply the logic of ModeContext here, accordin to the mode provided (either pomodoro or break),
@@ -20,10 +36,10 @@ export default function TimerControls() {
       <Button buttonClass={'timerControls'} style={{background: ModesStyles.buttons.background}} onClick = {!currentTheme ? changeMode: null}>
         Timer
       </Button>
-      <Button buttonClass={'timerControls'} style={{background: ModesStyles.buttons.background}} onClick = {currentTheme ? changeMode: null}>
+      <Button buttonClass={'timerControls'} style={{background: ModesStyles.buttons.background}} onClick = {breakButton}>
         Break
       </Button>
-      <Button buttonClass={'timerControls'} style={{background: ModesStyles.buttons.background}} onClick = {currentTheme ? changeMode: null}>
+      <Button buttonClass={'timerControls'} style={{background: ModesStyles.buttons.background}} onClick = {longBreakButton}>
         Long Break
       </Button>
     </div>

@@ -1,22 +1,18 @@
-import React from 'react'
 import PomodoroControls from './PomodoroControls'
 import PomodoroImage from '../components/PomodoroImage'
 import SeedIcon from '../assets/icons/seed.png'
 import PomodoroIcon from '../assets/icons/pomodoro.png'
-import { ModeContext } from '../components/ModeContext'
-import { IsPlayingContext } from '../components/IsPlayingContext'
 import { useContext } from 'react'
 import { useEffect } from 'react'
+import { TimerContext } from '../components/TimerContext'
 
 export default function Pomodoro() {
   const {ModesStyles: currentStyle,
-         ispomodoro: currentMode,
-         setpomodoro: changeMode
-  } = useContext(ModeContext);
-
-  const {isPlaying,
-        setIsPlaying
-  } = useContext(IsPlayingContext);
+         isPomodoro: currentMode,
+         setPomodoro: changeMode,
+         isPlaying,
+         setIsPlaying
+  } = useContext(TimerContext);
 
   {/*we set a timeout to changeMode so the user won't do it on a loop */}
   function pressSpace(e){

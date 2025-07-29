@@ -4,15 +4,16 @@ import RefreshArrowIcon from '../assets/icons/refresh-arrow.svg'
 import PlayIcon from '../assets/icons/play.svg'
 import StopIcon from '../assets/icons/stop.svg'
 import SettingsIcon from '../assets/icons/settings.svg'
-import { ModeContext } from '../components/ModeContext'
-import { IsPlayingContext } from '../components/IsPlayingContext'
 import { useContext } from 'react'
 import { useEffect } from 'react'
+import { TimerContext } from '../components/TimerContext'
 
 export default function PomodoroControls() {
 
-  const {isPlaying, setIsPlaying} = useContext(IsPlayingContext);
-  const {ModesStyles: currentStyle, ispomodoro: currentMode} = useContext(ModeContext);
+  const {isPlaying, setIsPlaying,
+    ModesStyles: currentStyle, ispomodoro: currentMode
+  } = useContext(TimerContext);
+
   function StopStart(){
     setIsPlaying(!isPlaying)
   }
