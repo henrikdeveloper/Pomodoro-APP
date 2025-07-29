@@ -15,6 +15,7 @@ export const TimerProvider = ({children}) =>{
     const [isPomodoro, setPomodoro] = useState(true);
     const ModesStyles = isPomodoro ? PomodoroStyle: BreakStyle;
     const [currentTimer, setTimer] = useState(0);
+    const [isTyping, setIsTyping] = useState(false);
 
 
     //this sets the current timer and sets its dependencies
@@ -62,7 +63,7 @@ export const TimerProvider = ({children}) =>{
 
     // we don't pass streaks and setStreaks because incrementStreaks and resetStreaks properly does their jobs.
     const value = {currentTimer, setTimer, isPlaying, setIsPlaying, isLongBreak, incrementStreaks,
-        resetStreaks, isPomodoro, setPomodoro, ModesStyles, forceLongBreak, reverseForced
+        resetStreaks, isPomodoro, setPomodoro, ModesStyles, forceLongBreak, reverseForced, isTyping, setIsTyping
     }
     return(
         <TimerContext.Provider value={value}>

@@ -14,34 +14,6 @@ export default function Pomodoro() {
          setIsPlaying
   } = useContext(TimerContext);
 
-  {/*we set a timeout to changeMode so the user won't do it on a loop */}
-  function pressSpace(e){
-    if (e.key === ' '){
-      e.preventDefault()
-      setTimeout(() => {setIsPlaying(isPlaying => !isPlaying)},150)
-    }
-  }
-  function pressShift(e){
-    if (e.key === 'Shift'){
-      e.preventDefault()
-      setTimeout(() => {changeMode(currentMode => !currentMode)},150)
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener('keypress', pressSpace);
-    return () => {
-      window.removeEventListener('keypress', pressSpace)
-    }},
-    [isPlaying, setIsPlaying]
-  )
-  useEffect(() => {
-    window.addEventListener('keydown', pressShift);
-    return () => {
-      window.removeEventListener('keydown', pressShift)
-    }},
-    [currentMode, changeMode]
-  )
   return (
     <div className='Pomodoro'>
      <PomodoroImage ImgSrc={currentMode ? PomodoroIcon: SeedIcon}></PomodoroImage>

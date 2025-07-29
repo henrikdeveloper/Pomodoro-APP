@@ -9,7 +9,6 @@ export default function Timer() {
 
   useEffect(() => {
     if (!isPlaying) return;
-
     if (currentTimer <= 0){
       setIsPlaying(false)
       setTimer(0)
@@ -37,7 +36,6 @@ export default function Timer() {
     return `${paddedMinutes}:${paddedSeconds}`;
 
   }
-  console.log('Timer atual ' + currentTimer)
   return (
     <div className='Timer'>
       <div className='timerCount'>{formatTimer(currentTimer)}</div>
