@@ -1,17 +1,17 @@
 :root{
-    --color-break-background-hover: #d1d4ce;
+    --color-break-background-hover: #7f906e;
     --sound-color-border: rgba(51, 51, 51, 0.3);
     --sound-color-border-hover: rgba(128, 128, 128, 1); 
     --sound-color:rgb(71, 71, 71) ;
     --sound-color-hover: rgb(75, 74, 74);
 }
 
-*{
+*{  background-color: rgb(240, 234, 234);
     font-family:"M Plus Rounded 1c", sans-serif;
 }
 .App_Container{
     display: flex;
-    gap: 12vh;
+    gap: 20vh;
     justify-self: center;
     align-items: center;
     justify-content: center;
@@ -20,16 +20,20 @@
     margin: 15vh;
 }
 .PomodoroIcon{
+    position: relative;
     align-items: center;
     justify-content: center;
-    padding: 4vh;
-    width: 27vh;
+    padding: 0;
+    width: 200px;
+    height: 200px;
 }
-.PomodoroIcon img{
+.PomodoroImage_img{
+    position: absolute;
+    margin-top: 22px;
+    margin-left: 27px;
     background:transparent;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
+    width: 65%;
+    z-index: 2;
     cursor:pointer;
     animation-duration: 1.2s;
     animation-name: Floating;
@@ -38,23 +42,24 @@
     animation-iteration-count: infinite;
 }
 .PomodoroIcon_shadow{
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    top: 75%;
+    left: 30%;
     width: 13.5vh;
     height: 1vh;
+    z-index: 1;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.45);
-    margin-left: 7vh;
     margin-top: 3vh;
     filter: blur(5px);
-    animation-duration: 1.245s;
+    animation-duration: 1.945s;
     animation-name: shadowFloating;
     animation-direction: alternate;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
 .PomodoroControls{
-    margin-top: -2vh;
+    margin-top: -1vh;
     align-items: center;
     justify-content: center;
     display: flex;

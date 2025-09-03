@@ -6,6 +6,7 @@ import { useContext, useState } from 'react'
 import { TimerContext } from '../components/TimerContext'
 import { useEffect } from 'react'
 
+
 export default function PomodoroTimer() {
   const {ModesStyles,
          isPomodoro: currentMode,
@@ -14,6 +15,7 @@ export default function PomodoroTimer() {
          setIsPlaying,
          isTyping
   } = useContext(TimerContext)
+
   
   /*we set a timeout to changeMode so the user won't do it on a loop */
   function pressSpace(e){
@@ -22,7 +24,9 @@ export default function PomodoroTimer() {
     }
     else{
     if (e.key === ' '){
-      setTimeout(() => {setIsPlaying(isPlaying => !isPlaying)},150)
+      setTimeout(() => {
+        setIsPlaying(isPlaying => !isPlaying)}
+        ,150)
     }
   }
   }
@@ -57,7 +61,6 @@ export default function PomodoroTimer() {
       <Task style={{color: ModesStyles.buttons.background}}></Task>
       <Timer></Timer>
       <TimerControls></TimerControls>
-      <MusicControls></MusicControls>
     </div>
   )
 }

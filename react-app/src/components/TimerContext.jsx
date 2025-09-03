@@ -1,6 +1,10 @@
-import { useState, createContext, useMemo, useEffect} from "react";
+import { useState, createContext, useMemo, useEffect, useContext} from "react";
 import BreakStyle from "./BreakStyle";
 import PomodoroStyle from './PomodoroStyle';
+import useSound from 'use-sound';
+import presssound from '../assets/sounds/buttonpress.mp3'
+import alarmsound from '../assets/sounds/alarmclock.mp3'
+import { SoundContext } from '../components/SoundContext'
 
 export const TimerContext = createContext(null)
 export const TimerProvider = ({children}) =>{
@@ -16,21 +20,25 @@ export const TimerProvider = ({children}) =>{
     const ModesStyles = isPomodoro ? PomodoroStyle: BreakStyle;
     const [currentTimer, setTimer] = useState(0);
     const [isTyping, setIsTyping] = useState(false);
+    const [playPressSound] = useSound(presssound, {volume: 0.25})
+    const [playAlarmSound] = useSound(alarmsound, {volume: 0.25})
+    const {isSoundOn, setSoundOn} = useContext(SoundContext)
 
+    if(currentTimer === 0){
+        playAlarmSound()
+    }
 
     //this sets the current timer and sets its dependencies
     useEffect(() => {
-        if (isPomodoro){
-            setTimer(pomodoroTime)
-        }
-        else if (!isPomodoro && isForced){
-            setTimer(longBreakTime)
-        }
-        else{
-            setTimer(breaktime)
-        }
+        resetPomodoro()
     }, [isPomodoro, pomodoroTime, breaktime, isForced])
 
+    //this plays the button-press sound
+    useEffect(() => {
+      playPressSound()
+    },
+        [isPlaying]
+  )
     //this sets the streaks and reset them if its above 3
     useEffect(() => {
         if(streaks > minimumStreaks){
@@ -41,8 +49,20 @@ export const TimerProvider = ({children}) =>{
     //this useEffect ensures the timer stops if the user changes the Pomodoro Mode.
     useEffect(() => {
         setIsPlaying(false)
-    }, [isPomodoro])
+    }, [isPomodoro, pomodoroTime])
 
+    function resetPomodoro(){
+        setIsPlaying(false)
+        if (isPomodoro){
+            setTimer(pomodoroTime)
+        }
+        else if (!isPomodoro && isForced){
+            setTimer(longBreakTime)
+        }
+        else{
+            setTimer(breaktime)
+        }
+    }
     function incrementStreaks(){
         setStreaks(prev => prev + 1)
     }
@@ -64,7 +84,7 @@ export const TimerProvider = ({children}) =>{
     // we don't pass streaks and setStreaks because incrementStreaks and resetStreaks properly does their jobs.
     const value = {currentTimer, setTimer, isPlaying, setIsPlaying, isLongBreak, incrementStreaks,
         resetStreaks, isPomodoro, setPomodoro, ModesStyles, forceLongBreak, reverseForced, isTyping, setIsTyping, pomodoroTime,
-        normalBreakTime, longBreakTime, breaktime
+        normalBreakTime, longBreakTime, breaktime, resetPomodoro
     }
     return(
         <TimerContext.Provider value={value}>

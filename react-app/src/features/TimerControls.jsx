@@ -10,23 +10,28 @@ export default function TimerControls() {
          forceLongBreak,
          ModesStyles,
          currentTimer,
-         reverseForced
+         reverseForced,
+         setIsPlaying
   } = useContext(TimerContext);
 
   function changeMode() {
     setTheme(!currentTheme)
   };
+
   function longBreakButton(){
     if(currentTheme){
       setTheme(!currentTheme)
     }
     forceLongBreak()
+    setIsPlaying(false)
   };
   function breakButton(){
     if(currentTheme){
       setTheme(!currentTheme)
     }
     reverseForced()
+    setIsPlaying(false)
+
   }
   console.log(currentTimer)
   return (

@@ -19,7 +19,7 @@ export default function Timer() {
 
     const tick = setInterval(() => {
       setTimer(prev => prev - 1000)
-    }, 100);
+    }, 1000);
 
     return () => clearInterval(tick);
   }, [isPlaying, setTimer, currentTimer, setPomodoro])

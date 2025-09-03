@@ -3,10 +3,13 @@ import PomodoroTimer from './features/PomodoroTimer'
 import Pomodoro from './features/Pomodoro'
 import { TaskProvider } from './components/TaskContext'
 import { TimerProvider } from './components/TimerContext'
+import { SoundProvider } from './components/SoundContext'
+
 
 function App() {
 
   return (
+    <SoundProvider>
     <TimerProvider>
     <TaskProvider>
       <div className='App_Container'>
@@ -15,6 +18,7 @@ function App() {
        </div>
     </TaskProvider>
     </TimerProvider>
+    </SoundProvider>
   )
 }
 
